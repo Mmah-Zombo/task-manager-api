@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from database import engine, Base
+from routes import user
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -10,6 +11,9 @@ app = FastAPI(
     description="An API that helps users to manage their tasks",
     version="0.0.1"
 )
+
+
+app.include_router(user.router)
 
 
 @app.get('/')

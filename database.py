@@ -5,6 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from dotenv import load_dotenv
 
+# Get environment variables
 load_dotenv()
 
 db_name = os.getenv("DATABASE_NAME")
@@ -22,3 +23,11 @@ engine = create_engine(DATABASE_URL, echo=True)
 
 # Create a session to interact with the database
 db_session = sessionmaker(bind=engine, autocommit=False, autoflush=False)
+
+
+def get_db():
+    db = db_session()
+    try:
+        yield db
+    finally:
+        db.close()
