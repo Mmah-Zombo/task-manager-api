@@ -8,6 +8,10 @@ def get_all(db: Session):
     return db.query(User).all()
 
 
+def get_by_username(username: str, db: Session):
+    return db.query(User).filter(User.name == username).first()
+
+
 def get_by_id(user_id: int, db: Session):
     return db.query(User).filter(User.id == user_id).first()
 
