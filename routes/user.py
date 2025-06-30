@@ -61,3 +61,17 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
         raise HTTPException(status_code=500, detail="Could not generate token")
 
     return {"access_token": new_token, "token_type": "bearer"}
+
+
+@router.post('/logout')
+def logout(current_user: User = Depends(get_current_user)):
+    pass
+
+
+@router.delete('/delete')
+def delete_user(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    deleted_user = user_crud.delete(current_user.id, db)
+    if not deleted_user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    return {"message": "User account deleted"}
