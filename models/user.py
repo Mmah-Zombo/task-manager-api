@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy.orm import Relationship
 from database import Base
 
 
@@ -10,3 +11,5 @@ class User(Base):
     password = Column(String, nullable=False)
     created_at = Column(DateTime, nullable=False)
     updated_at = Column(DateTime, nullable=False)
+
+    todos = Relationship("Todo", back_populates="user", cascade="all, delete-orphan")
