@@ -12,8 +12,9 @@ def get_by_id(todo_id: int, db: Session):
     return db.query(Todo).filter(Todo.id == todo_id).first()
 
 
-def create(todo_data: TodoCreate, db: Session):
+def create(todo_data: TodoCreate, user_id: int, db: Session):
     new_todo = Todo(**todo_data.dict())
+    new_todo.user_id = user_id
     new_todo.created_at = datetime.utcnow()
     new_todo.updated_at = datetime.utcnow()
     db.add(new_todo)

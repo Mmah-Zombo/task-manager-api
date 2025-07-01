@@ -7,11 +7,11 @@ class Todo(BaseModel):
     description: str
     priority: int = 1
     completed: bool = False
-    user_id: int
 
 
 class TodoResponse(Todo):
     id: int
+    user_id: int
     created_at: datetime
     updated_at: datetime
 
