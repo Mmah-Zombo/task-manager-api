@@ -29,10 +29,13 @@ def create(user: UserCreate, db: Session):
 def update(user_id: int, user_data: UserCreate, db: Session):
     db_user = get_by_id(user_id, db)
     if db_user:
-        for key, value in user_data.dict(exclude_unset=True).items():
-            setattr(db_user, key, value)
-        db.commit()
-        db.refresh(db_user)
+        try:
+            for key, value in user_data.dict(exclude_unset=True).items():
+                setattr(db_user, key, value)
+            db.commit()
+            db.refresh(db_user)
+        finally:
+             pass
     return db_user
 
 

@@ -75,3 +75,14 @@ def delete_user(db: Session = Depends(get_db), current_user: User = Depends(get_
         raise HTTPException(status_code=404, detail="User not found")
 
     return {"message": "User account deleted"}
+
+
+@router.put('/')
+def update_user(user_data: UserCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    user_id = current_user.id
+    updated_user = user_crud.update(user_id, user_data, db)
+
+    if not updated_user:
+        raise HTTPException(status_code=500, detail="Could not update user")
+
+    return updated_user
