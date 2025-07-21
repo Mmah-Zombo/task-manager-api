@@ -1,7 +1,9 @@
+from datetime import datetime
+
 from sqlalchemy.orm import Session
+
 from models.todo import Todo
 from schemas.todo import Todo as TodoCreate
-from datetime import datetime
 
 
 def get_all(db: Session):

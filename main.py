@@ -1,6 +1,7 @@
 from fastapi import FastAPI
-from database import engine, Base
-from routes import user, todo
+
+from database import Base, engine
+from routes import todo, user
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -9,7 +10,7 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI(
     title="Todo List API",
     description="An API that helps users to manage their tasks",
-    version="0.0.1"
+    version="0.0.1",
 )
 
 
@@ -17,6 +18,6 @@ app.include_router(user.router)
 app.include_router(todo.router)
 
 
-@app.get('/')
+@app.get("/")
 async def index():
     return {"message": "Welcome to this cool TODO List API built with Python"}

@@ -1,5 +1,7 @@
-from sqlalchemy.orm import Session
 from datetime import datetime
+
+from sqlalchemy.orm import Session
+
 from models.user import User
 from schemas.user import User as UserCreate
 
@@ -35,7 +37,7 @@ def update(user_id: int, user_data: UserCreate, db: Session):
             db.commit()
             db.refresh(db_user)
         finally:
-             pass
+            pass
     return db_user
 
 

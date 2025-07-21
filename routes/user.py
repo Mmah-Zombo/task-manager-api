@@ -1,34 +1,42 @@
+from typing import List
+
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
-from database import get_db
-from schemas.user import User as UserCreate, UserResponse
 from sqlalchemy.orm import Session
-from typing import List
+
 from crud import user as user_crud
-from utils.auth import hash_password, verify_password, generate_token
+from database import get_db
 from dependencies.auth import get_current_user
 from models.user import User
+from schemas.user import User as UserCreate
+from schemas.user import UserResponse
+from utils.auth import generate_token, hash_password, verify_password
+
+router = APIRouter(prefix="/users", tags=["Users"])
 
 
-router = APIRouter(prefix='/users', tags=['Users'])
-
-
-@router.get('/', response_model=List[UserResponse])
-def get_users(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+@router.get("/", response_model=List[UserResponse])
+def get_users(
+    db: Session = Depends(get_db), current_user: User = Depends(get_current_user)
+):
     if not current_user:
         return HTTPException(status_code=401, detail="Unauthorized")
     return user_crud.get_all(db)
 
 
-@router.get('/{user_id}', response_model=UserResponse)
-def get_user(user_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+@router.get("/{user_id}", response_model=UserResponse)
+def get_user(
+    user_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     user = user_crud.get_by_id(user_id, db)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return user
 
 
-@router.post('/', response_model=UserResponse)
+@router.post("/", response_model=UserResponse)
 def create_user(user_data: UserCreate, db: Session = Depends(get_db)):
     db_user = user_crud.get_by_username(user_data.name, db)
     if db_user:
@@ -46,8 +54,10 @@ def create_user(user_data: UserCreate, db: Session = Depends(get_db)):
     return new_user
 
 
-@router.post('/login')
-def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+@router.post("/login")
+def login(
+    form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
+):
     db_user = user_crud.get_by_username(form_data.username, db)
     if not db_user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -63,13 +73,15 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     return {"access_token": new_token, "token_type": "bearer"}
 
 
-@router.post('/logout')
+@router.post("/logout")
 def logout(current_user: User = Depends(get_current_user)):
     pass
 
 
-@router.delete('/delete')
-def delete_user(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+@router.delete("/delete")
+def delete_user(
+    db: Session = Depends(get_db), current_user: User = Depends(get_current_user)
+):
     deleted_user = user_crud.delete(current_user.id, db)
     if not deleted_user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -77,8 +89,12 @@ def delete_user(db: Session = Depends(get_db), current_user: User = Depends(get_
     return {"message": "User account deleted"}
 
 
-@router.put('/')
-def update_user(user_data: UserCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+@router.put("/")
+def update_user(
+    user_data: UserCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     user_id = current_user.id
     updated_user = user_crud.update(user_id, user_data, db)
 

@@ -1,24 +1,29 @@
-from fastapi import APIRouter, Depends, HTTPException
 from typing import List
+
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+
 from crud import todo as todo_crud
 from database import get_db
 from dependencies.auth import get_current_user
-from models.todo import Todo
 from models.user import User
-from schemas.todo import TodoResponse, Todo as TodoCreate
-from sqlalchemy.orm import Session
-
+from schemas.todo import Todo as TodoCreate
+from schemas.todo import TodoResponse
 
 router = APIRouter(prefix="/todos", tags=["Todos"])
 
 
-@router.get('/', response_model=List[TodoResponse])
+@router.get("/", response_model=List[TodoResponse])
 def list_todos(current_user: User = Depends(get_current_user)):
     return current_user.todos
 
 
-@router.get('/{todo_id}', response_model=TodoResponse)
-def get_todo(todo_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+@router.get("/{todo_id}", response_model=TodoResponse)
+def get_todo(
+    todo_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     db_todo = todo_crud.get_by_id(todo_id, db)
     if not db_todo:
         raise HTTPException(status_code=404, detail="Task not found")
@@ -29,8 +34,12 @@ def get_todo(todo_id: int, db: Session = Depends(get_db), current_user: User = D
     return db_todo
 
 
-@router.post('/', response_model=TodoResponse)
-def create_todo(todo_data: TodoCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+@router.post("/", response_model=TodoResponse)
+def create_todo(
+    todo_data: TodoCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     user_id = current_user.id
     new_todo = todo_crud.create(todo_data, user_id, db)
     if not new_todo:
@@ -38,13 +47,18 @@ def create_todo(todo_data: TodoCreate, db: Session = Depends(get_db), current_us
     return new_todo
 
 
-@router.put('/{todo_id}', response_model=TodoResponse)
-def update_todo(todo_id: int, data: TodoCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+@router.put("/{todo_id}", response_model=TodoResponse)
+def update_todo(
+    todo_id: int,
+    data: TodoCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     todo = todo_crud.get_by_id(todo_id, db)
     if not todo:
         raise HTTPException(status_code=404, detail="Todo not found")
 
-    owner = (todo.user_id == current_user.id)
+    owner = todo.user_id == current_user.id
     if not owner:
         raise HTTPException(status_code=403, detail="Unauthorized to update this todo")
 
@@ -56,16 +70,20 @@ def update_todo(todo_id: int, data: TodoCreate, db: Session = Depends(get_db), c
     return todo
 
 
-@router.delete('/{todo_id}')
-def delete_todo(todo_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+@router.delete("/{todo_id}")
+def delete_todo(
+    todo_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     todo = todo_crud.get_by_id(todo_id, db)
     if not todo:
         raise HTTPException(status_code=404, detail="Todo not found")
 
-    owner = (todo.user_id == current_user.id)
+    owner = todo.user_id == current_user.id
     if not owner:
         raise HTTPException(status_code=403, detail="Unauthorized to delete this todo")
 
     todo_crud.delete(todo_id, db)
 
-    return {'message': f'Todo with id: {todo_id} deleted'}
+    return {"message": f"Todo with id: {todo_id} deleted"}

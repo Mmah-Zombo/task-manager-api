@@ -1,9 +1,9 @@
 import os
-
 from datetime import datetime, timedelta
-from passlib.context import CryptContext
-from jose import jwt, JWTError
+
 from dotenv import load_dotenv
+from jose import JWTError, jwt
+from passlib.context import CryptContext
 
 load_dotenv()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
