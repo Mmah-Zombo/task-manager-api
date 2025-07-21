@@ -36,3 +36,36 @@ def create_todo(todo_data: TodoCreate, db: Session = Depends(get_db), current_us
     if not new_todo:
         raise HTTPException(status_code=500, detail="Could not create new task")
     return new_todo
+
+
+@router.put('/{todo_id}', response_model=TodoResponse)
+def update_todo(todo_id: int, data: TodoCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    todo = todo_crud.get_by_id(todo_id, db)
+    if not todo:
+        raise HTTPException(status_code=404, detail="Todo not found")
+
+    owner = (todo.user_id == current_user.id)
+    if not owner:
+        raise HTTPException(status_code=403, detail="Unauthorized to update this todo")
+
+    todo = todo_crud.update(todo_id, data, db)
+
+    if not todo:
+        raise HTTPException(status_code=500, detail="Could not update todo")
+
+    return todo
+
+
+@router.delete('/{todo_id}')
+def delete_todo(todo_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    todo = todo_crud.get_by_id(todo_id, db)
+    if not todo:
+        raise HTTPException(status_code=404, detail="Todo not found")
+
+    owner = (todo.user_id == current_user.id)
+    if not owner:
+        raise HTTPException(status_code=403, detail="Unauthorized to delete this todo")
+
+    todo_crud.delete(todo_id, db)
+
+    return {'message': f'Todo with id: {todo_id} deleted'}
