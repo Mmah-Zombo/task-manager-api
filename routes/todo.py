@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
@@ -87,3 +87,19 @@ def delete_todo(
     todo_crud.delete(todo_id, db)
 
     return {"message": f"Todo with id: {todo_id} deleted"}
+
+
+@router.get('/filter/', response_model=List[TodoResponse])
+def filter_todos(completed: bool = None, priority: int = None, description: str = None, current_user: User = Depends(get_current_user)):
+    todos = current_user.todos
+    filtered_todos = []
+    if completed is not None:
+        filtered_todos = [todo for todo in todos if todo.completed == completed]
+
+    if priority is not None:
+        filtered_todos = [todo for todo in filtered_todos if todo.priority == priority]
+
+    if description is not None:
+        filtered_todos = [todo for todo in filtered_todos if todo.description == description]
+
+    return filtered_todos
