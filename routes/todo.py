@@ -89,8 +89,13 @@ def delete_todo(
     return {"message": f"Todo with id: {todo_id} deleted"}
 
 
-@router.get('/filter/', response_model=List[TodoResponse])
-def filter_todos(completed: bool = None, priority: int = None, description: str = None, current_user: User = Depends(get_current_user)):
+@router.get("/filter/", response_model=List[TodoResponse])
+def filter_todos(
+    completed: bool = None,
+    priority: int = None,
+    description: str = None,
+    current_user: User = Depends(get_current_user),
+):
     todos = current_user.todos
     filtered_todos = todos
     if completed is not None:
@@ -100,6 +105,8 @@ def filter_todos(completed: bool = None, priority: int = None, description: str 
         filtered_todos = [todo for todo in filtered_todos if todo.priority == priority]
 
     if description is not None:
-        filtered_todos = [todo for todo in filtered_todos if todo.description == description]
+        filtered_todos = [
+            todo for todo in filtered_todos if todo.description == description
+        ]
 
     return filtered_todos
