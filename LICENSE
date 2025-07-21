@@ -1,0 +1,78 @@
+Custom Revenue-Sharing Open Source License (CRS-1.0)
+
+Copyright (c) 2025 M’mah Zombo
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the “Software”), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+1.  Redistribution and Use
+    -----------------------
+    Redistributions of source code must retain the above copyright notice,
+    this list of conditions, and the following disclaimer. Redistributions in
+    binary form must reproduce the above copyright notice, this list of
+    conditions, and the following disclaimer in the documentation and/or other
+    materials provided with the distribution.
+
+2.  Revenue Sharing
+    ---------------
+    If you use the Software, in whole or in part, to develop or enhance any
+    software, service, application, or product (a “Derivative Product”) that
+    generates revenue (including, without limitation, sales, subscriptions,
+    licensing fees, advertising revenue, or any other monetization), you
+    agree to pay the original author (M’mah Zombo) seven percent (7%) of the
+    gross profits derived from such Derivative Product, on a quarterly basis,
+    within thirty (30) days after the end of each calendar quarter. “Gross
+    profits” means all revenue actually received, less returns, refunds,
+    and sales taxes.
+
+3.  Reporting and Audit
+    -------------------
+    Within thirty (30) days after the end of each calendar quarter, you shall
+    provide a written report to the original author showing gross revenues
+    and the calculation of the 7% share. Upon reasonable notice and during
+    normal business hours, you shall permit the original author (or an
+    appointed auditor) to inspect records relating to the revenue derived
+    from the Derivative Product, at your expense, to verify the accuracy of
+    such reports.
+
+4.  Disclaimer of Warranty
+    ----------------------
+    THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+    THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    DEALINGS IN THE SOFTWARE.
+
+5.  Limitation of Liability
+    -----------------------
+    IN NO EVENT AND UNDER NO LEGAL THEORY, WHETHER IN TORT (INCLUDING NEGLIGENCE),
+    CONTRACT, OR OTHERWISE, SHALL THE COPYRIGHT HOLDER BE LIABLE TO YOU OR ANY
+    OTHER PERSON FOR ANY INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES
+    OF ANY CHARACTER ARISING OUT OF THIS LICENSE OR THE USE OF THE SOFTWARE
+    INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF GOODWILL, WORK STOPPAGE,
+    DATA, OR COMPUTER FAILURE OR MALFUNCTION, EVEN IF THE COPYRIGHT HOLDER
+    SHALL HAVE BEEN INFORMED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+6.  Termination
+    ----------
+    This license and the rights granted hereunder will terminate automatically
+    if you fail to comply with any of its terms. Upon termination, you must
+    cease all use and distribution of the Software and Derivative Products
+    incorporating it.
+
+7.  Governing Law
+    -------------
+    This license shall be governed by and construed in accordance with the laws
+    of Sierra Leone, without regard to its conflict of laws principles.
+
+8.  Entire Agreement
+    ----------------
+    This license constitutes the entire agreement between the parties with
+    respect to the Software and supersedes all prior or contemporaneous
+    understandings regarding such subject matter.
