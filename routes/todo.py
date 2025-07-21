@@ -92,7 +92,7 @@ def delete_todo(
 @router.get('/filter/', response_model=List[TodoResponse])
 def filter_todos(completed: bool = None, priority: int = None, description: str = None, current_user: User = Depends(get_current_user)):
     todos = current_user.todos
-    filtered_todos = []
+    filtered_todos = todos
     if completed is not None:
         filtered_todos = [todo for todo in todos if todo.completed == completed]
 
