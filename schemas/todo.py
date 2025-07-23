@@ -8,6 +8,7 @@ class Todo(BaseModel):
     description: str
     priority: int = 1
     completed: bool = False
+    due_on: datetime
 
 
 class TodoResponse(Todo):

@@ -13,6 +13,7 @@ class Todo(Base):
     priority = Column(Integer, nullable=False, default=1)
     completed = Column(Boolean, nullable=False, default=False)
     user_id = Column(Integer, ForeignKey("users.id"))
+    due_on = Column(DateTime, nullable=False)
     created_at = Column(DateTime, nullable=False)
     updated_at = Column(DateTime, nullable=False)
 
